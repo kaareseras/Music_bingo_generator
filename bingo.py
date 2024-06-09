@@ -3,50 +3,39 @@ from PIL import ImageFont, ImageDraw, Image
 import csv
 
 # Generate a list of 40 real pop music pieces from 1995 to 1999, format it with Title - Artist - Year
-pop_pieces = [
-    "Baby One More Time - Britney Spears - 1998",
-    "I Want It That Way - Backstreet Boys - 1999",
-    "Genie in a Bottle - Christina Aguilera - 1999",
-    "Livin' la Vida Loca - Ricky Martin - 1999",
-    "Wannabe - Spice Girls - 1996",
-    "Torn - Natalie Imbruglia - 1997",
-    "No Scrubs - TLC - 1999",
-    "Believe - Cher - 1998",
-    "Smooth - Santana ft. Rob Thomas - 1999",
-    "I Will Always Love You - Whitney Houston - 1992",
-    "My Heart Will Go On - Celine Dion - 1997",
-    "I Want You Back - *NSYNC - 1996",
-    "Waterfalls - TLC - 1994",
-    "Bitter Sweet Symphony - The Verve - 1997",
-    "Iris - Goo Goo Dolls - 1998",
-    "Say My Name - Destiny's Child - 1999",
-    "Kiss Me - Sixpence None The Richer - 1997",
-    "Un-Break My Heart - Toni Braxton - 1996",
-    "Truly Madly Deeply - Savage Garden - 1997",
-    "I'll Be Missing You - Puff Daddy ft. Faith Evans - 1997",
-    "Don't Speak - No Doubt - 1995",
-    "All Star - Smash Mouth - 1999",
-    "I Want You - Savage Garden - 1996",
-    "Tearin' Up My Heart - *NSYNC - 1997",
-    "I Don't Want to Miss a Thing - Aerosmith - 1998",
-    "The Boy Is Mine - Brandy & Monica - 1998",
-    "Bailamos - Enrique Iglesias - 1999",
-    "I Want You Back - Savage Garden - 1996",
-    "You're Still the One - Shania Twain - 1997",
-    "I'll Be There for You - The Rembrandts - 1995",
-    "Smooth Criminal - Alien Ant Farm - 2001",
-]
 
-    # "Mambo No. 5 (A Little Bit of...) - Lou Bega - 1999",
-    # "I Want You to Want Me - Letters to Cleo - 1999",
-    # "Iris - Goo Goo Dolls - 1998",
-    # "Bailamos - Enrique Iglesias - 1999",
-    # "I Want You Back - *NSYNC - 1996",
-    # "No Rain - Blind Melon - 1992",
-    # "I Will Always Love You - Whitney Houston - 1992",
-    # "My Own Worst Enemy - Lit - 1999",
-    # "I Want It That Way - Backstreet Boys - 1999",
-    # "Genie in a Bottle - Christina Aguilera - 1999"
+pop_pieces = [
+    "Barbie Girl - Aqua - 1997",
+    "Wannabe - Spice Girls - 1996",
+    "Be My Lover - La Bouche - 1995",
+    "Baby One More Time - Britney Spears - 1999",
+    "Mambo nr. 5 - Lou Bega - 1999",
+    "Ice Ice Baby - Vanilla Ice - 1990",
+    "Macarena - Los Del Rio - 1993",
+    "Give It up - Cut ´N´Move - 1993",
+    "Let Me Entertain You - Robbie Williams - 1997",
+    "Believe - Cher - 1998",
+    "I Want It that Way - Backstreet Boys - 1999",
+    "When You´re Gone - Bryan Adams, Melanie C - 1998",
+    "Spændt Op Til Lir - Den Gale Pose - 1998",
+    "Saturday Night - Whigfield - 1995",
+    "I Want You Back - NSYNC - 1997",
+    "Dub-I-Dub - Me & My - 1995",
+    "MMMBop - Hanson - 1997",
+    "Could I Have This Kiss Forever - Enrique Iglesias, Whitney Houston - 1999",
+    "Cotton Eye Joe - Rednex - 1994",
+    "Livin´la Vida Loca - Ricky Martin - 1999",
+    "All That She Wants - Ace of Base - 1992",
+    "Genie In a Bottle - Christina Aguilera - 1999",
+    "I´d Do Anything For Love - Meat Loaf - 1993",
+    "Wonderwall - Oasis - 1995",
+    "Don´t Speak - No Doubt - 1995",
+    "How Deep Is Your Love - Take That - 1996",
+    "En som dig - Back to Back - 1991",
+    "I´m Too Sexy - Right Said Fred - 1991",
+    "Losing My Religion - R.E.M - 1991",
+    "Romeo - Blå øjne - 1995"
+]
 
 list_of_pieces = []
 
@@ -97,12 +86,13 @@ def create_bingo_grid(number:int, pieces: list[Piece]):
             y2 = y1 + cell_height
 
             # Draw a rectangle for the cell
-            draw.rectangle([(x1+cell_offset, y1+cell_offset), (x2-cell_offset, y2-cell_offset)], outline="grgit ay", width=5)
+            draw.rectangle([(x1+cell_offset, y1+cell_offset), (x2-cell_offset, y2-cell_offset)], outline="gray", width=5)
 
             # Write the selected piece in the cell
             piece = pieces[row * 5 + col]
             title_font = ImageFont.truetype("arial.ttf", 22)
             artist_font = ImageFont.truetype("arial.ttf", 15)
+            copyright_font = ImageFont.truetype("arial.ttf", 10)
             title_text = piece.title
             artist_text = piece.artist
 
@@ -123,6 +113,12 @@ def create_bingo_grid(number:int, pieces: list[Piece]):
 
             draw.text(title_position, title_text, font=title_font, fill="black", align="center")
             draw.text(artist_position, artist_text, font=artist_font, fill="black", align="center")
+
+    number_position = (image_width - 30, image_height -30)
+    draw.text(number_position, f"{number}", font=title_font, fill="black", align="bottom-right")
+
+    number_position = (20, image_height -30)
+    draw.text(number_position, "(C)2024 - LawGirls Lmt", font=title_font, fill="black", align="bottom-left", )
 
     #image.show()
     return image
@@ -179,9 +175,12 @@ def create_bingo_grid_old(number: int):
             
             title_position = (x1 + cell_width/2 - title_width/2, y1 + cell_height/2 - title_height/2 -10 )
             artist_position = (x1 + cell_width/2 - artist_width/2, y1 + cell_height/2 + artist_height/2  )
+            
 
             draw.text(title_position, title_text, font=title_font, fill="black", align="center")
-            draw.text(artist_position, artist_text, font=artist_font, fill="black", align="center")
+            draw.text(artist_position, artist_text, font=copyright_font, fill="black", align="center")
+
+
 
     # Save the image
     image.save(f"bingo_grid_{number}.png")
@@ -191,6 +190,7 @@ def create_bingo_grid_old(number: int):
 # Call the function to create the bingo grid
 count = 0
 for item in pop_pieces:
+    print (item).__str__()
     title = item.split(" - ")[0]
     artist = item.split(" - ")[1]
     year = item.split(" - ")[2]
