@@ -146,6 +146,12 @@ def create_bingo_grid(number:int, pieces: list[Piece]):
             draw.text(title_position, title_text, font=title_font, fill="black", align="center")
             draw.text(artist_position, artist_text, font=artist_font, fill="black", align="center")
 
+    number_position = (image_width - 30, image_height -30 + main_title_height)
+    draw.text(number_position, f"{number}", font=title_font, fill="black", align="bottom-right")
+
+    number_position = (20, image_height -30 + main_title_height)
+    draw.text(number_position, author, font=title_font, fill="black", align="bottom-left", )
+    
     #image.show()
     return image
 
