@@ -5,7 +5,7 @@ import csv
 main_title = "TilsynsBingo"
 author = "Hanne""(C)2024 - Hanne Lmt"
 secondary_text = "Bingoplader til tilsynsbesøg"
-generate_count = 1
+generate_count = 28
 cell_size = 300
 cell_offset = 0
 rows= 2
@@ -13,14 +13,22 @@ colls = 5
 
 
 # Generate a list of 40 real pop music pieces from 1995 to 1999, format it with Title - Artist - Year
-pop_pieces_old = [
-    "Baby One More Time - Britney Spears - 1998",
+pop_pieces = [
+    "Smuk som et stjerneskud - Brødrene Olsen - 1990",
+    "Mamma Mia - ABB - 1975",
+    "Jalousi - Medina - 2009",
+    "Girls Just Want to Have Fun - Cyndi Lauper - 1983",
+    "I Will Survive - Gloria Gaynor - 1978",
+    "Kongen Af Danmark - Malte Ebert - 1999",
+    "Kom Tilbage Nu - Danseorkestret - 1985",
+    "Jeg Vil La`Lyset brænde - Ray Dee Ohh - 1988",
+    "Sig Du Ka´Li´Mig - Tøsedrengene - 1985",
+    "Hold Me Now - Johnny Logan - 1987",
+    "Only Teardrops - Emmelie de Forest - 2013",
+    "I En Lille Båd Der Gynger - Bamses Venner - 1980",
     "I Want It That Way - Backstreet Boys - 1999",
-    "Genie in a Bottle - Christina Aguilera - 1999",
-    "Livin' la Vida Loca - Ricky Martin - 1999",
-    "Wannabe - Spice Girls - 1996",
-    "Torn - Natalie Imbruglia - 1997",
-    "No Scrubs - TLC - 1999",
+    "Billie Jean - Michael Jackson - 1982",
+    "Øde Ø - Rasmus Seebach - 2011",
     "Believe - Cher - 1998",
     "Smooth - Santana ft. Rob Thomas - 1999",
     "I Will Always Love You - Whitney Houston - 1992",
@@ -47,39 +55,16 @@ pop_pieces_old = [
     "Smooth Criminal - Alien Ant Farm - 2001",
 ]
 
-pop_pieces = [
-    "Smuk som et stjerneskud - Brødrene Olsen - 1990",
-    "Mamma Mia - ABB - 1975",
-    "Jalousi - Medina - 2009",
-    "Girls Just Want to Have Fun - Cyndi Lauper - 1983",
-    "I Will Survive - Gloria Gaynor - 1978",
-    "Kongen Af Danmark - Malte Ebert - 1999",
-    "Kom Tilbage Nu - Danseorkestret - 1985",
-    "Jeg Vil La`Lyset brænde - Ray Dee Ohh - 1988",
-    "Sig Du Ka´Li´Mig - Tøsedrengene - 1985",
-    "Hold Me Now - Johnny Logan - 1987",
-    "Only Teardrops - Emmelie de Forest - 2013",
-    "I En Lille Båd Der Gynger - Bamses Venner - 1980",
-    "I Want It That Way - Backstreet Boys - 1999",
-    "Billie Jean - Michael Jackson - 1982",
-    "Øde Ø - Rasmus Seebach - 2011",
-    "Believe - Cher - 1998",
-    "Kiss - Prince - 1986",
-    "Vågner I natten - Dodo & the Dodos - 1987",
-    "Stayin´Alive - Bee Gees - 1977",
-    "De Første Kærester På Månen - TV-2 - 1986",
-    "Hvor ska´vi sove i nat - Laban - 1982",
-    "Bohemian Rhapsody - Queen - 1975",
-    "Don´t Go Breaking My Heart - Elton John, Kiki Dee - 1976",
-    "Oh, Pretty Woman - Roy Orbison - 1964",
-    "Imagine - John Lennon - 1971",
-    "Kender du det? - Søren Kragh-Jacobsen - 1985",
-    "En som dig - Back To Back - 1989",
-    "STOR MAND - Tobias Rahim, Andreas Odbjerg - 2020",
-    "I will Always Love You - Whitney Houston - 1992",
-    "Glor På Vinduer - Anne Linnet, Marquis De Sade - 1986"
-]
-
+    # "Mambo No. 5 (A Little Bit of...) - Lou Bega - 1999",
+    # "I Want You to Want Me - Letters to Cleo - 1999",
+    # "Iris - Goo Goo Dolls - 1998",
+    # "Bailamos - Enrique Iglesias - 1999",
+    # "I Want You Back - *NSYNC - 1996",
+    # "No Rain - Blind Melon - 1992",
+    # "I Will Always Love You - Whitney Houston - 1992",
+    # "My Own Worst Enemy - Lit - 1999",
+    # "I Want It That Way - Backstreet Boys - 1999",
+    # "Genie in a Bottle - Christina Aguilera - 1999"
 
 list_of_pieces = []
 
@@ -159,7 +144,6 @@ def create_bingo_grid(number:int, pieces: list[Piece]):
             piece = pieces[row * colls + col]
             title_font = ImageFont.truetype("arial.ttf", 22)
             artist_font = ImageFont.truetype("arial.ttf", 15)
-            copyright_font  = ImageFont.truetype("arial.ttf", 12)
             title_text = piece.title
             artist_text = piece.artist
 
@@ -181,19 +165,74 @@ def create_bingo_grid(number:int, pieces: list[Piece]):
             draw.text(title_position, title_text, font=title_font, fill="black", align="center")
             draw.text(artist_position, artist_text, font=artist_font, fill="black", align="center")
 
-    number_position = (image_width - 30, image_height -30 + main_title_height)
-    draw.text(number_position, f"{number}", font=title_font, fill="black", align="bottom-right")
-
-    copyright_position = (20, image_height -30 + main_title_height)
-    draw.text(copyright_position, author, font=copyright_font, fill="black", align="bottom-left", )
-
     #image.show()
     return image
 
+def create_bingo_grid_old(number: int):
+    # Create a blank image with white background
+    cell_size = 300
+    cell_offset = 0
+    image_width = cell_size * 5
+    image_height = cell_size * 2
+    image = Image.new("RGB", (image_width, image_height), "white")
+    draw = ImageDraw.Draw(image)
+
+    # Shuffle the list of pop pieces
+    random.shuffle(pop_pieces)
+
+    # Select 5 random elements from the list
+    selected_pieces = random.sample(pop_pieces, 10)
+
+    # Calculate the width and height of each cell in the grid
+    cell_width = image_width // 5
+    cell_height = image_height // 2
+
+    # Draw the grid
+    for row in range(2):
+        for col in range(5):
+            # Calculate the top left coordinates of the cell
+            x1 = col * cell_width
+            y1 = row * cell_height
+            x2 = x1 + cell_width
+            y2 = y1 + cell_height
+
+            # Draw a rectangle for the cell
+            draw.rectangle([(x1+cell_offset, y1+cell_offset), (x2-cell_offset, y2-cell_offset)], outline="black", width=5)
+
+            # Write the selected piece in the cell
+            piece = selected_pieces[row * 5 + col]
+            title_font = ImageFont.truetype("arial.ttf", 22)
+            artist_font = ImageFont.truetype("arial.ttf", 15)
+            title_text = piece.split(" - ")[0]
+            artist_text = piece.split(" - ")[1]
+
+
+            title_x1, title_y1, title_x2, title_y2  = draw.textbbox((0, 0),title_text, font=title_font, align="center")
+            artist_x1, artist_y1, artist_x2, artist_y2  = draw.textbbox((0, 0),artist_text, font=artist_font, align="center")
+
+            title_width = title_x2 - title_x1
+            title_height = title_y2 - title_y1
+            artist_width = artist_x2 - artist_x1
+            artist_height = artist_y2 - artist_y1 
+
+            title_height = 28
+            artist_height = 19   
+            
+            title_position = (x1 + cell_width/2 - title_width/2, y1 + cell_height/2 - title_height/2 -10 )
+            artist_position = (x1 + cell_width/2 - artist_width/2, y1 + cell_height/2 + artist_height/2  )
+
+            draw.text(title_position, title_text, font=title_font, fill="black", align="center")
+            draw.text(artist_position, artist_text, font=artist_font, fill="black", align="center")
+
+    # Save the image
+    image.save(f"bingo_grid_{number}.png")
+    #image.show()
+    return selected_pieces
 
 # Call the function to create the bingo grid
 count = 0
 for item in pop_pieces:
+    print (item).__str__()
     title = item.split(" - ")[0]
     artist = item.split(" - ")[1]
     year = item.split(" - ")[2]
